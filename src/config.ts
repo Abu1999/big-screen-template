@@ -1,6 +1,6 @@
 import pic1 from '@/assets/bg/18.png'
 
-const themeSwitch: string = 'light'
+const themeSwitch: string = 'dark'
 
 const darkConfig = {
   $theme: 'dark', //主题   light|dark

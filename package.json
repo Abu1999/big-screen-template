@@ -22,12 +22,10 @@
   },
   "dependencies": {
     "@kjgl77/datav-vue3": "^1.7.4",
-    "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.11.0",
     "echarts": "^5.6.0",
     "echarts-gl": "^2.0.9",
     "pinia": "^3.0.3",
-    "tailwindcss": "^4.1.11",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
@@ -35,6 +33,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@prettier/plugin-oxc": "^0.0.4",
+    "@tailwindcss/postcss": "^4.1.11",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.16.5",
     "@vitejs/plugin-vue": "^6.0.1",
@@ -43,6 +42,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "autoprefixer": "^10.4.21",
     "cz-git": "^1.12.0",
     "eslint": "^9.31.0",
     "eslint-plugin-oxlint": "~1.8.0",
@@ -51,8 +51,11 @@
     "jiti": "^2.4.2",
     "npm-run-all2": "^8.0.4",
     "oxlint": "~1.8.0",
+    "postcss": "^8.5.6",
     "prettier": "3.6.2",
     "sass-embedded": "^1.90.0",
+    "tailwindcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
     "typescript": "~5.8.0",
     "unplugin-auto-import": "^19.3.0",
     "vite": "npm:rolldown-vite@latest",
@@ -64,10 +67,5 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
-  },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
   }
 }

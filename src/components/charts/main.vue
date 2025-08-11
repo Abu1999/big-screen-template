@@ -6,7 +6,6 @@
 import * as echarts from 'echarts'
 import 'echarts-gl'
 import chinaGeoDataJson from '@/assets/中华人民共和国.json'
-import { inject } from 'vue'
 import vintagedData from './theme/vintage.json'
 
 const theme = inject('$theme') as string

@@ -95,7 +95,7 @@ function getPie3D(pieData: any, internalDiameterRatio: number, boxHeight: number
       : 1 / 3
   for (let i = 0; i < pieData.length; i += 1) {
     sumValue += pieData[i].value
-    const seriesItem = {
+    const seriesItem:any = {
       name: typeof pieData[i].name === 'undefined' ? `series${i}` : pieData[i].name,
       type: 'surface',
       parametric: true,
@@ -157,7 +157,7 @@ function getPie3D(pieData: any, internalDiameterRatio: number, boxHeight: number
       },
       formatter: (name: any) => {
         if (pieData.length) {
-          const item = pieData.filter((item) => item.name === name)[0]
+          const item = pieData.filter((item:any) => item.name === name)[0]
           return `${name} (${item.value}人) `
         }
       },

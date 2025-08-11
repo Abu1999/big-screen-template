@@ -1,0 +1,11 @@
+@use "tailwindcss";
+
+/* 纯 CSS 测试样式，不依赖 Tailwind */
+.test-red {
+  color: red;
+}
+
+/* Tailwind 工具类测试 */
+.test-tailwind {
+  @apply bg-blue-500 text-white p-2;
+}

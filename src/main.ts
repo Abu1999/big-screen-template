@@ -1,7 +1,7 @@
+import './styles/index.scss'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-import './index.css'
 import { config } from './config'
 import DataVVue3 from '@kjgl77/datav-vue3'
 import MyComponents from '@/components/global'

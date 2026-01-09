@@ -2,22 +2,9 @@
   <div class="w-full h-full">
     <div class="w-full h-full">
       <Layout layoutName="LayoutA" :loading="loading">
-        <template #lt>
-          <LT :data="state?.data1"></LT>
+        <template v-for="item in slotItems" :key="item.slot" v-slot:[item.slot]>
+          <component :is="item.component" :data="state?.[item.dataKey]" />
         </template>
-        <template #lm>
-          <LM :data="state?.data2"></LM>
-        </template>
-        <template #lb>
-          <LB :data="state?.data3"></LB>
-        </template>
-        <template #mt>
-          <MT :data="state?.data4"></MT>
-        </template>
-        <template #mb> <MB :data="state?.data5"></MB> </template>
-        <template #rt> <RT :data="state?.data6"></RT></template>
-        <template #rm> <RM :data="state?.data7"></RM> </template>
-        <template #rb> <RB :data="state?.data8"></RB> </template>
       </Layout>
     </div>
   </div>
@@ -25,18 +12,33 @@
 
 <script setup lang="ts">
 import Layout from '@/layout/index.vue'
-import LT from './components/LT.vue'
-import LM from './components/LM.vue'
-import LB from './components/LB.vue'
-import RT from './components/RT.vue'
-import RM from './components/RM.vue'
-import MT from './components/MT.vue'
-import MB from './components/MB.vue'
-import RB from './components/RB.vue'
 import getState from './index'
 
 const loading = ref(true)
 const state: any = ref({})
+
+const homeComponentModules = import.meta.glob('./components/*.vue')
+
+function loadHomeComponent(fileName: string) {
+  const moduleKey = `./components/${fileName}.vue`
+  const loader = homeComponentModules[moduleKey]
+  if (!loader) return undefined
+  return defineAsyncComponent(loader as never)
+}
+
+const slotItems = [
+  { slot: 'lt', file: 'LT', dataKey: 'data1' },
+  { slot: 'lm', file: 'LM', dataKey: 'data2' },
+  { slot: 'lb', file: 'LB', dataKey: 'data3' },
+  { slot: 'mt', file: 'MT', dataKey: 'data4' },
+  { slot: 'mb', file: 'MB', dataKey: 'data5' },
+  { slot: 'rt', file: 'RT', dataKey: 'data6' },
+  { slot: 'rm', file: 'RM', dataKey: 'data7' },
+  { slot: 'rb', file: 'RB', dataKey: 'data8' },
+].map((item) => ({
+  ...item,
+  component: loadHomeComponent(item.file),
+}))
 
 onMounted(() => {
   getState().then((res: any) => {

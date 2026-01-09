@@ -1,13 +1,20 @@
 import { getListData, getHomeData } from '@/api/home'
 
 function fixData(data: any) {
-  if (!data) return []
-  const newData: any = []
+  if (!Array.isArray(data) || data.length === 0) return []
+  const newData: any[] = []
   data.forEach((el: any) => {
-    newData.push({ name: el.content, value: el.count || 0 })
+    if (!el) return
+    if (typeof el.name !== 'undefined' && typeof el.value !== 'undefined') {
+      newData.push({ name: el.name, value: Number(el.value) || 0 })
+      return
+    }
+    if (typeof el.content !== 'undefined') {
+      newData.push({ name: el.content, value: Number(el.count) || 0 })
+    }
   })
 
-  newData.sort((a: any, b: any) => b.value - a.value)
+  newData.sort((a: any, b: any) => (Number(b.value) || 0) - (Number(a.value) || 0))
   return newData
 }
 
@@ -22,11 +29,9 @@ function fixMapData(data: any) {
 }
 function fixListData(data: any) {
   if (!data) return []
-  const newData: any = []
-  data.forEach((el: any) => {
-    newData.push([el?.province, el?.city, el?.school, el?.sex, el?.age])
-  })
-  return newData
+  if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0])) return data
+  if (!Array.isArray(data) || data.length === 0) return []
+  return data.map((el: any) => [el?.province, el?.city, el?.school, el?.sex, el?.age])
 }
 
 function getState() {
@@ -41,26 +46,35 @@ function getState() {
       data6: undefined,
       data7: undefined,
       data8: undefined,
+      list: undefined,
     }
     Promise.allSettled(promises).then((results) => {
       results.forEach((result: any, index: number) => {
         if (result.status === 'fulfilled') {
-          if (result.value && result.value.length) {
-            switch (index) {
-              case 0:
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixData(result.value.data1)
-                state.data1 = fixMapData(result.data1)
-                break
-              case 1:
-                state.list = fixListData(result.value)
-              default:
-                break
+          switch (index) {
+            case 0: {
+              const home: any = result.value
+              if (home) {
+                if (typeof home.data1 !== 'undefined') state.data1 = fixData(home.data1)
+                if (typeof home.data2 !== 'undefined') state.data2 = fixData(home.data2)
+                if (typeof home.data3 !== 'undefined') state.data3 = fixData(home.data3)
+                if (typeof home.data4 !== 'undefined') state.data4 = fixMapData(home.data4)
+                if (typeof home.data5 !== 'undefined') state.data5 = fixListData(home.data5)
+                if (typeof home.data6 !== 'undefined') state.data6 = fixData(home.data6)
+                if (typeof home.data7 !== 'undefined') state.data7 = fixData(home.data7)
+                if (typeof home.data8 !== 'undefined') state.data8 = fixData(home.data8)
+              }
+              break
             }
+            case 1: {
+              const listResult: any = result.value
+              const listData = Array.isArray(listResult) ? listResult : listResult?.list || listResult?.data || []
+              state.list = fixListData(listData)
+              if (typeof state.data5 === 'undefined') state.data5 = state.list
+              break
+            }
+            default:
+              break
           }
         } else {
           console.error(`失败:`, result.reason)

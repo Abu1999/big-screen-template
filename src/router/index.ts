@@ -6,6 +6,11 @@ const fixedRouters: any[] = [
     name: 'home',
     component: () => import('@/views/home/index.vue'),
   },
+  {
+    path: '/charts-options',
+    name: 'charts-options',
+    component: () => import('@/views/charts-options/index.vue'),
+  },
 ]
 
 const router = createRouter({
